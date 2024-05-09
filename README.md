@@ -17,6 +17,8 @@
 > Существуют различные подходы к сбору и подготовке данных, но в рамках данной работы 
       наиболее подходящим является использование текстового датасета, чанкинга и эмбеддингов.
 * [Реализация](#реализация)
+  * [Установка библиотек и импорт модулей](#установка-библиотек-и-импорт-модулей)
+  * [Загрузка данных из папки data](#загрузка-данных-из-папки-data)
   * [Разработка архитектуры чат-бота](#разработка-архитектуры-чат-бота)
   * [Retrieval-Augmented Generation (RAG)](#retrieval-augmented-generation)
 
@@ -58,6 +60,34 @@
 TXT, который является универсальным форматом хранения текстовой информации.
 
 ### Реализация
+
+#### Установка библиотек и импорт модулей
+
+```jupyter
+%pip install langchain sentence_transformers==2.5.1 lancedb==0.6.0 unstructured==0.12.5 yandex_chain==0.0.7 yandexcloud==0.262.0
+%pip install langchain==0.1.0
+
+import os
+folder_id = os.environ['folder_id'] # secret folder_id from environment variables
+api_key = os.environ['api_key']
+
+import pandas as pd
+import numpy as np
+import seaborn as sns
+
+import matplotlib.pyplot as plt
+import langchain
+import langchain.document_loaders
+import langchain.text_splitter as sp
+from yandex_chain import YandexEmbeddings
+import lancedb
+```
+#### Загрузка данных из папки data
+
+```jupyter
+source_dir = "data"
+loader = langchain.document_loaders.DirectoryLoader(source_dir, glob="*.txt", show_progress=True, recursive=True)
+```
 
 #### Разработка архитектуры чат-бота
 ![img.png](img.png)
